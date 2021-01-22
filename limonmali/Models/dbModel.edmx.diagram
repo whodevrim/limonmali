@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="247412466d3b4d7895a4c7952a788808" Name="Diagram1">
+        <EntityTypeShape EntityType="dbLimonModel.Slider" Width="1.5" PointX="10.125" PointY="3.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="dbLimonModel.Kategori" Width="1.5" PointX="1.125" PointY="1.875" />
+        <EntityTypeShape EntityType="dbLimonModel.Sayfalar" Width="1.5" PointX="3.75" PointY="1.375" />
+        <AssociationConnector Association="dbLimonModel.FK_Sayfalar_ToKategori" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

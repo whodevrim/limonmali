@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbLimonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="KatId" />
+          </Key>
+          <Property Name="KatId" Type="int" Nullable="false" />
+          <Property Name="KatAdi" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Sayfalar">
+          <Key>
+            <PropertyRef Name="SayfaId" />
+          </Key>
+          <Property Name="SayfaId" Type="int" Nullable="false" />
+          <Property Name="SayfaAdi" Type="nchar" MaxLength="50" />
+          <Property Name="SayfaIcerik" Type="nvarchar(max)" />
+          <Property Name="SayfaImg" Type="varchar" MaxLength="50" />
+          <Property Name="SayfaKatId" Type="int" />
+        </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="SliderId" />
+          </Key>
+          <Property Name="SliderId" Type="int" Nullable="false" />
+          <Property Name="SliderAdi" Type="nchar" MaxLength="50" />
+          <Property Name="SliderIcerik" Type="nchar" MaxLength="50" />
+          <Property Name="SliderImg" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Sayfalar_ToKategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="0..1" />
+          <End Role="Sayfalar" Type="Self.Sayfalar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="KatId" />
+            </Principal>
+            <Dependent Role="Sayfalar">
+              <PropertyRef Name="SayfaKatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbLimonModelStoreContainer">
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sayfalar" EntityType="Self.Sayfalar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Sayfalar_ToKategori" Association="Self.FK_Sayfalar_ToKategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Sayfalar" EntitySet="Sayfalar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbLimonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="SliderId" />
+          </Key>
+          <Property Name="SliderId" Type="Int32" Nullable="false" />
+          <Property Name="SliderAdi" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="SliderIcerik" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="SliderImg" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="dbLimonEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Slider" EntityType="Self.Slider" />
+          <EntitySet Name="Kategori" EntityType="dbLimonModel.Kategori" />
+          <EntitySet Name="Sayfalar" EntityType="dbLimonModel.Sayfalar" />
+          <AssociationSet Name="FK_Sayfalar_ToKategori" Association="dbLimonModel.FK_Sayfalar_ToKategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Sayfalar" EntitySet="Sayfalar" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="KatId" />
+          </Key>
+          <Property Name="KatId" Type="Int32" Nullable="false" />
+          <Property Name="KatAdi" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Sayfalar" Relationship="dbLimonModel.FK_Sayfalar_ToKategori" FromRole="Kategori" ToRole="Sayfalar" />
+        </EntityType>
+        <EntityType Name="Sayfalar">
+          <Key>
+            <PropertyRef Name="SayfaId" />
+          </Key>
+          <Property Name="SayfaId" Type="Int32" Nullable="false" />
+          <Property Name="SayfaAdi" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="SayfaIcerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SayfaImg" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SayfaKatId" Type="Int32" />
+          <NavigationProperty Name="Kategori" Relationship="dbLimonModel.FK_Sayfalar_ToKategori" FromRole="Sayfalar" ToRole="Kategori" />
+        </EntityType>
+        <Association Name="FK_Sayfalar_ToKategori">
+          <End Type="dbLimonModel.Kategori" Role="Kategori" Multiplicity="0..1" />
+          <End Type="dbLimonModel.Sayfalar" Role="Sayfalar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="KatId" />
+            </Principal>
+            <Dependent Role="Sayfalar">
+              <PropertyRef Name="SayfaKatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbLimonModelStoreContainer" CdmEntityContainer="dbLimonEntities">
+          <EntitySetMapping Name="Slider">
+            <EntityTypeMapping TypeName="dbLimonModel.Slider">
+              <MappingFragment StoreEntitySet="Slider">
+                <ScalarProperty Name="SliderId" ColumnName="SliderId" />
+                <ScalarProperty Name="SliderAdi" ColumnName="SliderAdi" />
+                <ScalarProperty Name="SliderIcerik" ColumnName="SliderIcerik" />
+                <ScalarProperty Name="SliderImg" ColumnName="SliderImg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategori">
+            <EntityTypeMapping TypeName="dbLimonModel.Kategori">
+              <MappingFragment StoreEntitySet="Kategori">
+                <ScalarProperty Name="KatAdi" ColumnName="KatAdi" />
+                <ScalarProperty Name="KatId" ColumnName="KatId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sayfalar">
+            <EntityTypeMapping TypeName="dbLimonModel.Sayfalar">
+              <MappingFragment StoreEntitySet="Sayfalar">
+                <ScalarProperty Name="SayfaKatId" ColumnName="SayfaKatId" />
+                <ScalarProperty Name="SayfaImg" ColumnName="SayfaImg" />
+                <ScalarProperty Name="SayfaIcerik" ColumnName="SayfaIcerik" />
+                <ScalarProperty Name="SayfaAdi" ColumnName="SayfaAdi" />
+                <ScalarProperty Name="SayfaId" ColumnName="SayfaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
